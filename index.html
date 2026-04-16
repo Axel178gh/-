@@ -3,44 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Agenda Personal | Instituto</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Muro Comunitario ITB</title>
+    <link rel="stylesheet" href="estilo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
-    <div id="authContainer" class="fade-in">
+    <div id="authContainer">
         <div class="auth-card">
-            <h2><i class="fas fa-user-shield"></i> Mi Espacio</h2>
-            <p>Inicia sesión para ver tus tareas</p>
+            <h2><i class="fas fa-users"></i> Muro Grupal</h2>
+            <p>Solo personal autorizado</p>
             <input type="text" id="username" placeholder="Usuario">
             <input type="password" id="password" placeholder="Contraseña">
-            <div class="auth-buttons">
-                <button onclick="login()">Entrar</button>
-                <button onclick="register()" class="btn-secondary">Registrarse</button>
-            </div>
+            <button onclick="login()">Entrar al Muro</button>
         </div>
     </div>
 
-    <div id="appContainer" class="hidden fade-in">
+    <div id="appContainer" class="hidden">
         <nav>
             <span id="welcomeMsg"></span>
-            <button onclick="logout()" class="logout-btn">Cerrar Sesión</button>
+            <button onclick="location.reload()" class="btn-exit">Cerrar Sesión</button>
         </nav>
 
-        <header>
-            <h1>Organizador de Tareas 📚</h1>
-            <div class="counter">Tienes <span id="noteCount">0</span> pendientes</div>
-        </header>
-
         <div class="input-section">
-            <textarea id="noteInput" placeholder="Escribe tu tarea o pendiente para hoy..."></textarea>
-            <button onclick="addNote()" id="addBtn">Guardar Nota</button>
+            <h3><i class="fas fa-edit"></i> Publicar para todos</h3>
+            <textarea id="noteInput" placeholder="¿Qué quieres decirle al grupo?"></textarea>
+            <input type="text" id="photoInput" placeholder="Enlace de la imagen (opcional)...">
+            <button onclick="addNote()"><i class="fas fa-paper-plane"></i> Publicar en el Muro</button>
         </div>
 
-        <div id="notesList" class="notes-grid"></div>
+        <h2 style="margin-top: 30px;">Notas de la Comunidad</h2>
+        <div id="notesList" class="notes-grid">
+            </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
