@@ -15,19 +15,11 @@ async function login() {
             document.getElementById('authContainer').style.display = 'none';
             document.getElementById('appContainer').classList.remove('hidden');
             document.getElementById('welcomeMsg').innerText = `Hola, ${user}`;
-            
-            // Cargar notas al entrar
             renderNotas();
-            
-            // ESTO HACE QUE TODOS VEAN TODO EN TIEMPO REAL:
-            // Revisa el servidor cada 5 segundos buscando notas nuevas de otros
+            // ACTUALIZACIÓN EN TIEMPO REAL: Revisa cada 5 segundos
             setInterval(renderNotas, 5000);
-        } else { 
-            alert("Credenciales incorrectas"); 
-        }
-    } catch (e) { 
-        alert("El servidor está despertando... espera 15 segundos y reintenta."); 
-    }
+        } else { alert("Usuario o clave incorrecta"); }
+    } catch (e) { alert("Servidor despertando... reintenta en 10 segundos."); }
 }
 
 async function addNote() {
@@ -44,14 +36,12 @@ async function addNote() {
             foto_url: photo.value 
         })
     });
-    
-    text.value = ""; 
-    photo.value = "";
-    renderNotas(); // Actualizar inmediatamente para mí
+    text.value = ""; photo.value = "";
+    renderNotas();
 }
 
 async function borrar(id) {
-    if(confirm("¿Quieres eliminar esta nota del muro de todos?")) {
+    if(confirm("¿Eliminar nota para todos?")) {
         await fetch(`${URL_API}/notas/${id}`, { method: 'DELETE' });
         renderNotas();
     }
@@ -67,19 +57,14 @@ async function renderNotas() {
         notas.forEach(n => {
             const div = document.createElement('div');
             div.className = 'note-card';
-            
-            // Imagen si existe
             const img = n.foto_url ? `<img src="${n.foto_url}" class="note-img">` : '';
-            
-            // Botón borrar: visible para el dueño de la nota o para Axel (admin)
+            // El admin (ajbohorquez) puede borrar cualquier nota
             const btnBorrar = (n.autor === usuarioActivo || usuarioActivo === 'ajbohorquez') 
-                ? `<button onclick="borrar(${n.id})" class="del-btn"><i class="fas fa-trash"></i> Eliminar</button>` 
-                : '';
+                ? `<button onclick="borrar(${n.id})" class="del-btn">Eliminar</button>` : '';
 
             div.innerHTML = `
                 <div class="note-header">
-                    <b><i class="fas fa-user-circle"></i> ${n.autor}</b>
-                    <small>${n.fecha}</small>
+                    <b>${n.autor}</b> <small>${n.fecha}</small>
                 </div>
                 <p>${n.contenido}</p>
                 ${img}
@@ -87,7 +72,5 @@ async function renderNotas() {
             `;
             list.appendChild(div);
         });
-    } catch (e) {
-        console.log("Buscando nuevas notas...");
-    }
+    } catch (e) { console.log("Sincronizando..."); }
 }
