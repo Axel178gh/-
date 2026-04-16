@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muro Comunitario ITB</title>
+    <title>Muro Grupal ITB</title>
     <link rel="stylesheet" href="estilo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div id="authContainer">
         <div class="auth-card">
-            <h2><i class="fas fa-users"></i> Muro Grupal</h2>
-            <p>Solo personal autorizado</p>
+            <h2><i class="fas fa-users"></i> Muro de la Comunidad</h2>
             <input type="text" id="username" placeholder="Usuario">
             <input type="password" id="password" placeholder="Contraseña">
             <button onclick="login()">Entrar al Muro</button>
@@ -25,15 +24,15 @@
         </nav>
 
         <div class="input-section">
-            <h3><i class="fas fa-edit"></i> Publicar para todos</h3>
-            <textarea id="noteInput" placeholder="¿Qué quieres decirle al grupo?"></textarea>
-            <input type="text" id="photoInput" placeholder="Enlace de la imagen (opcional)...">
-            <button onclick="addNote()"><i class="fas fa-paper-plane"></i> Publicar en el Muro</button>
+            <h3>Publicar Nota Nueva</h3>
+            <textarea id="noteInput" placeholder="Escribe un mensaje para todos..."></textarea>
+            <input type="text" id="photoInput" placeholder="Link de foto (opcional)...">
+            <button onclick="addNote()"><i class="fas fa-share"></i> Publicar en el Muro</button>
         </div>
 
-        <h2 style="margin-top: 30px;">Notas de la Comunidad</h2>
-        <div id="notesList" class="notes-grid">
-            </div>
+        <hr style="border:0; border-top:1px solid #334155; margin:25px 0;">
+        <h2><i class="fas fa-globe"></i> Notas de Todos</h2>
+        <div id="notesList" class="notes-grid"></div>
     </div>
     <script src="script.js"></script>
 </body>
