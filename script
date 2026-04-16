@@ -1,11 +1,12 @@
 let usuarioActivo = null;
+const URL_API = "https://v7ousc2553.onrender.com"; // Tu URL de Render
 
 async function login() {
     const user = document.getElementById('username').value;
     const pass = document.getElementById('password').value;
 
     try {
-        const res = await fetch('http://localhost:5000/login', {
+        const res = await fetch(`${URL_API}/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ usuario: user, password: pass })
@@ -21,7 +22,7 @@ async function login() {
             alert("Usuario o clave incorrecta");
         }
     } catch (error) {
-        alert("¿Encendiste el servidor Python?");
+        alert("Error al conectar con el servidor");
     }
 }
 
@@ -29,7 +30,7 @@ async function addNote() {
     const input = document.getElementById('noteInput');
     if (!input.value.trim()) return;
 
-    await fetch('http://localhost:5000/notas', {
+    await fetch(`${URL_API}/notas`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ 
@@ -43,24 +44,24 @@ async function addNote() {
 }
 
 async function renderNotasCompartidas() {
-    const res = await fetch('http://localhost:5000/notas');
+    const res = await fetch(`${URL_API}/notas`);
     const notas = await res.json();
     
     const container = document.getElementById('notesList');
     container.innerHTML = "";
     
+    document.getElementById('noteCount').innerText = notas.length;
+
     notas.forEach(n => {
         const div = document.createElement('div');
         div.className = 'note-card fade-in';
-        // Le damos un color diferente si la nota es tuya
-        const estiloPropio = n.autor === usuarioActivo ? "style='border-left-color: #10b981;'" : "";
-        
         div.innerHTML = `
-            <div ${estiloPropio}>
+            <div>
                 <span class="note-date"><b>${n.autor}</b> - ${n.fecha}</span>
                 <p>${n.contenido}</p>
             </div>
         `;
         container.appendChild(div);
     });
+}
 }
