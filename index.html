@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Agenda Personal | Instituto</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="authContainer" class="fade-in">
+        <div class="auth-card">
+            <h2><i class="fas fa-user-shield"></i> Mi Espacio</h2>
+            <p>Inicia sesión para ver tus tareas</p>
+            <input type="text" id="username" placeholder="Usuario">
+            <input type="password" id="password" placeholder="Contraseña">
+            <div class="auth-buttons">
+                <button onclick="login()">Entrar</button>
+                <button onclick="register()" class="btn-secondary">Registrarse</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="appContainer" class="hidden fade-in">
+        <nav>
+            <span id="welcomeMsg"></span>
+            <button onclick="logout()" class="logout-btn">Cerrar Sesión</button>
+        </nav>
+
+        <header>
+            <h1>Organizador de Tareas 📚</h1>
+            <div class="counter">Tienes <span id="noteCount">0</span> pendientes</div>
+        </header>
+
+        <div class="input-section">
+            <textarea id="noteInput" placeholder="Escribe tu tarea o pendiente para hoy..."></textarea>
+            <button onclick="addNote()" id="addBtn">Guardar Nota</button>
+        </div>
+
+        <div id="notesList" class="notes-grid"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
