@@ -6,7 +6,7 @@ import datetime
 app = Flask(__name__)
 CORS(app)
 
-# Usuarios que pueden entrar al muro
+# Usuarios con acceso
 USUARIOS_AUTORIZADOS = {
     "ajbohorquez": "Axel2026)",
     "profesor": "clase2026",
@@ -19,7 +19,7 @@ def conectar_db():
 def iniciar_db():
     conn = conectar_db()
     cursor = conn.cursor()
-    # Añadimos foto_url para que todos vean imágenes
+    # Tabla única: Todo lo que se escriba aquí lo verán todos
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS notas_compartidas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,7 +45,7 @@ def login():
 def obtener_notas():
     conn = conectar_db()
     cursor = conn.cursor()
-    # Traemos todas las notas de la base de datos para que todos las vean
+    # Trae todas las notas de la DB para mostrar el muro completo
     cursor.execute("SELECT id, autor, contenido, foto_url, fecha FROM notas_compartidas ORDER BY id DESC")
     filas = cursor.fetchall()
     conn.close()
