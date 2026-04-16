@@ -1,14 +1,12 @@
-:root { --primary: #6366f1; --bg: #0f172a; --card: #1e293b; }
-body { background: var(--bg); color: #f8fafc; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; margin: 0; }
+:root { --p: #6366f1; --bg: #0f172a; --card: #1e293b; }
+body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
 .hidden { display: none; }
-#appContainer { width: 95%; max-width: 700px; padding: 20px; }
-nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #334155; }
-.auth-card { background: var(--card); padding: 40px; border-radius: 20px; margin-top: 100px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #334155; border: 1px solid #475569; border-radius: 8px; color: white; box-sizing: border-box; }
-button { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; transition: 0.3s; }
-button:hover { background: #4f46e5; }
-.note-card { background: var(--card); padding: 20px; border-radius: 15px; margin-top: 20px; border-top: 4px solid var(--primary); box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-.note-header { display: flex; justify-content: space-between; margin-bottom: 10px; color: #94a3b8; }
-.note-img { width: 100%; border-radius: 10px; margin: 15px 0; max-height: 450px; object-fit: cover; border: 1px solid #334155; }
-.del-btn { background: #ef4444; width: auto; padding: 6px 12px; font-size: 0.8rem; margin-top: 10px; }
-.btn-exit { background: #475569; width: auto; padding: 6px 15px; }
+#appContainer { width: 100%; max-width: 600px; }
+.auth-card { background: var(--card); padding: 30px; border-radius: 15px; text-align: center; }
+input, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #334155; border: none; border-radius: 8px; color: white; box-sizing: border-box; }
+button { background: var(--p); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
+.note-card { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 5px solid var(--p); }
+.note-header { display: flex; justify-content: space-between; margin-bottom: 10px; color: #94a3b8; font-size: 0.85rem; }
+.note-img { width: 100%; border-radius: 10px; margin: 10px 0; max-height: 400px; object-fit: cover; }
+.del-btn { background: #ef4444; width: auto; padding: 5px 10px; font-size: 0.7rem; margin-top: 10px; }
+.btn-exit { background: #475569; width: auto; padding: 5px 15px; float: right; }
