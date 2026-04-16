@@ -22,7 +22,7 @@ async function login() {
             alert("Usuario o clave incorrecta");
         }
     } catch (error) {
-        alert("Error al conectar con el servidor");
+        alert("Error al conectar con el servidor. Espera un minuto y vuelve a intentar.");
     }
 }
 
@@ -63,4 +63,13 @@ async function renderNotasCompartidas() {
         `;
         container.appendChild(div);
     });
+}
+
+// Funciones para que los botones no den error
+function logout() {
+    location.reload();
+}
+
+function register() {
+    alert("Para registrar nuevos usuarios, agrégalos en el archivo app.py del servidor.");
 }
