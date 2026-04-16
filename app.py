@@ -6,8 +6,7 @@ import datetime
 app = Flask(__name__)
 CORS(app)
 
-# --- CONFIGURACIÓN DE USUARIOS PERMITIDOS ---
-# Aquí puedes agregar todos los usuarios y contraseñas que quieras
+# Usuarios que pueden entrar al muro
 USUARIOS_AUTORIZADOS = {
     "ajbohorquez": "Axel2026)",
     "profesor": "clase2026",
@@ -20,12 +19,13 @@ def conectar_db():
 def iniciar_db():
     conn = conectar_db()
     cursor = conn.cursor()
-    # Tabla única para que todos compartan las notas
+    # Añadimos foto_url para que todos vean imágenes
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS notas_compartidas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             autor TEXT NOT NULL,
             contenido TEXT NOT NULL,
+            foto_url TEXT,
             fecha TEXT NOT NULL
         )
     ''')
@@ -37,34 +37,41 @@ def login():
     datos = request.json
     user = datos.get('usuario')
     password = datos.get('password')
-    
     if user in USUARIOS_AUTORIZADOS and USUARIOS_AUTORIZADOS[user] == password:
         return jsonify({"status": "ok", "usuario": user})
-    return jsonify({"status": "error", "mensaje": "Credenciales incorrectas"}), 401
+    return jsonify({"status": "error"}), 401
 
 @app.route('/notas', methods=['GET'])
-def obtener_todas_las_notas():
+def obtener_notas():
     conn = conectar_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT autor, contenido, fecha FROM notas_compartidas ORDER BY id DESC")
+    # Traemos todas las notas de la base de datos para que todos las vean
+    cursor.execute("SELECT id, autor, contenido, foto_url, fecha FROM notas_compartidas ORDER BY id DESC")
     filas = cursor.fetchall()
     conn.close()
-    
-    notas = [{"autor": f[0], "contenido": f[1], "fecha": f[2]} for f in filas]
-    return jsonify(notas)
+    return jsonify([{"id": f[0], "autor": f[1], "contenido": f[2], "foto_url": f[3], "fecha": f[4]} for f in filas])
 
 @app.route('/notas', methods=['POST'])
 def guardar_nota():
     datos = request.json
     conn = conectar_db()
     cursor = conn.cursor()
-    fecha_actual = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
-    cursor.execute("INSERT INTO notas_compartidas (autor, contenido, fecha) VALUES (?, ?, ?)", 
-                   (datos['autor'], datos['contenido'], fecha_actual))
+    fecha = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+    cursor.execute("INSERT INTO notas_compartidas (autor, contenido, foto_url, fecha) VALUES (?, ?, ?, ?)", 
+                   (datos['autor'], datos['contenido'], datos.get('foto_url'), fecha))
     conn.commit()
     conn.close()
-    return jsonify({"mensaje": "Nota compartida"}), 201
+    return jsonify({"status": "creado"}), 201
+
+@app.route('/notas/<int:id>', methods=['DELETE'])
+def eliminar_nota(id):
+    conn = conectar_db()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM notas_compartidas WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+    return jsonify({"status": "eliminado"}), 200
 
 if __name__ == '__main__':
     iniciar_db()
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', port=5000)
